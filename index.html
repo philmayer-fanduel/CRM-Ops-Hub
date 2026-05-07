@@ -515,10 +515,29 @@ hr.divider{border:none;border-top:1px solid var(--border-light);margin:28px 0;}
           <div class="dash-card-desc">Sprint velocity, initiative progress against 2026 OKRs, and Peakon engagement trend.</div>
           <span class="dash-card-cta">Open dashboard →</span>
         </div>
+        <div class="dash-card" onclick="toggleMarketingOpsEmbed()" id="marketing-ops-card" style="border-color:var(--fd-blue);background:linear-gradient(135deg,rgba(0,120,255,0.04),rgba(0,28,85,0.02));">
+          <div class="dash-card-eyebrow" style="color:var(--fd-blue);">Monthly · CRM Ops</div>
+          <div class="dash-card-title">Marketing Ops KPI Dashboard</div>
+          <div class="dash-card-desc">Campaign volumes, quality metrics, send performance, clicks, and audience health across SBK, CAS, and PRD. April 2026 actuals with MoM &amp; YoY comparisons.</div>
+          <span class="dash-card-cta" id="marketing-ops-cta">View embedded ↓</span>
+        </div>
       </div>
       <div class="notice-bar">
         <strong>Note:</strong> Dashboard links will be updated once connected to your BI tooling. Contact the CRM Ops lead to request access to Amplitude or Databricks reporting.
       </div>
+
+      <!-- MARKETING OPS EMBEDDED DASHBOARD -->
+      <div id="marketing-ops-embed" style="display:none;margin-top:24px;">
+        <div class="section-label" style="margin-bottom:12px;">📊 Marketing Ops KPI Dashboard — April 2026</div>
+        <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,28,85,0.10);">
+          <iframe
+            src="marketing_ops_dashboard.html"
+            style="width:100%;height:860px;border:none;display:block;"
+            title="Marketing Ops KPI Dashboard"
+          ></iframe>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -845,6 +864,23 @@ hr.divider{border:none;border-top:1px solid var(--border-light);margin:28px 0;}
 </div>
 
 <script>
+function toggleMarketingOpsEmbed() {
+  var embed = document.getElementById('marketing-ops-embed');
+  var cta = document.getElementById('marketing-ops-cta');
+  var card = document.getElementById('marketing-ops-card');
+  var isVisible = embed.style.display !== 'none';
+  if (isVisible) {
+    embed.style.display = 'none';
+    cta.textContent = 'View embedded ↓';
+    card.style.boxShadow = '';
+  } else {
+    embed.style.display = 'block';
+    cta.textContent = 'Collapse ↑';
+    card.style.boxShadow = '0 0 0 2px var(--fd-blue)';
+    embed.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 function nav(id) {
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
